@@ -1,0 +1,126 @@
+﻿@inject UserManager<ApplicationUser> _userManager
+@inject SignInManager<ApplicationUser> _signinManager
+@{
+    ApplicationUser appUser = null;
+    ViewData["Title"] = "Home Page";
+    if (_signinManager.IsSignedIn(User))
+        appUser = await _userManager.FindByNameAsync(User.Identity.Name);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyTaxi</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CabManagementSystem.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <h1>
+            <a href="index.html">
+                <img src="/Assets/logo.png">
+                <i>My</i><span>Taxi</span>
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li></a>
+                <li> <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a></li></a>
+                <li> <a class="nav-link text-light" asp-area="Accounts" asp-controller="Home" asp-action="Booking">Book a Ride</a></li></a>
+                <li> <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">Rent a Car</a></li></a>
+            </ul>
+        </nav>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="login-form">
+                <a asp-action="Logout" asp-controller="Home" asp-area="Accounts" class="nav-link text-light login" style="background-color:red">Logout</a>
+                <a asp-action="Edit" asp-controller="Home" asp-area="Accounts" class="nav-link text-warning">Hello @appUser?.FirstName</a>
+            </div>
+
+        }
+        else
+        {
+            <div class="login-form">
+            <a asp-action="Login" asp-controller="Home" asp-area="Accounts" class="nav-link text-dark login">Login</a>
+
+            <a asp-action="Register" asp-controller="Home" asp-area="Accounts" class="nav-link text-light">Register</a>
+            </div>
+
+        }
+    </header>
+@*<header>
+        <nav class="navbar-expand-sm  d-sm-inline-flex justify-content-between">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <h1>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="assets/logo.png">
+                            My<span>Taxi</span>
+                        </a>
+                    </h1>
+                    @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyTaxi</a>*@
+                
+                  @* <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Accounts" asp-controller="Home" asp-action="Booking">Book a Ride</a>
+                        </li>
+
+                         <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">Rent a Car</a>
+                         </li>
+                    </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Logout" asp-controller="Home" asp-area="Accounts" class="nav-link text-light">Logout</a>
+                        <a asp-action="Edit" asp-controller="Home" asp-area="Accounts" class="nav-link text-light">Your Profile👩</a>
+
+                    }
+                    else
+                    {
+                      
+                            <a asp-action="Login" asp-controller="Home" asp-area="Accounts" class="nav-link text-dark login">Login</a>
+                 
+                            <a asp-action="Register" asp-controller="Home" asp-area="Accounts" class="nav-link text-light">Register</a>
+                
+                    }
+                   
+                </div>
+                </div>
+            
+        </nav>
+    </header>*@
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+ @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 -MyTaxi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            
+            <a asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
+        </div>
+    </footer>*@
+
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    </body>
+</html>

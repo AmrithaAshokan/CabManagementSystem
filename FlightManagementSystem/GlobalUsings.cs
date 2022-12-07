@@ -1,0 +1,10 @@
+﻿global using CabManagementSystem.Data;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using CabManagementSystem.Models;
+global using Microsoft.AspNetCore.Identity;
+global using System.ComponentModel.DataAnnotations;
+global using CabManagementSystem.Models.ViewModel;
+global using Microsoft.AspNetCore.Mvc;
+global using System.Diagnostics;
+global using Microsoft.AspNetCore.Components.Routing;

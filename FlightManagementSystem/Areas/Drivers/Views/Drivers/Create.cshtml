@@ -1,0 +1,50 @@
+﻿@model CabManagementSystem.Models.Driver
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<hr />
+<div class="row booking-sec">
+    <div class="col-md-4 text-secondary" >
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CarName" class="control-label"></label>
+                <input asp-for="CarName" class="form-control" />
+                <span asp-validation-for="CarName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarNumber" class="control-label"></label>
+                <input asp-for="CarNumber" class="form-control" />
+                <span asp-validation-for="CarNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarModel"></label>
+                <select asp-for="CarModel" asp-items="@Html.GetEnumSelectList<CarModel>()" class="form-control">
+                    CarModel
+                    <option>--- Select a Car Model ---</option>
+                </select>
+                <span asp-validation-for="CarModel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicenseNumber" class="control-label"></label>
+                <input asp-for="LicenseNumber" class="form-control" />
+                <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DriverId" class="control-label"></label>
+                <select asp-for="DriverId" class ="form-control" asp-items="ViewBag.DriverId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class ="hovering" style="margin-top:2em;" asp-action="Index">Back to List</a>
+</div>
+

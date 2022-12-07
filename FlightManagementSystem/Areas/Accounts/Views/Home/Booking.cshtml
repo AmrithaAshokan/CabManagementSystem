@@ -1,0 +1,54 @@
+﻿@model BookingViewModel
+
+@{
+    ViewData["Title"] = "Booking";
+}
+
+<div class="booking-sec">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3 text-secondary">
+            <form method="post">
+                <div>
+                    <label asp-for="From"></label>
+                    <select asp-for="From" asp-items="@Html.GetEnumSelectList<Locations>()" class="form-control">
+                        From
+                        <option>--- Select a Pick-Up Location ---</option>
+                    </select>
+                    <span asp-validation-for="From" class="text-danger"></span>
+                    <div>
+                        <label asp-for="To"></label>
+                        <select asp-for="To" asp-items="@Html.GetEnumSelectList<Locations>()" class="form-control">
+                            To
+                            <option>--- Select a Drop-Off Location ---</option>
+                        </select>
+                        <span asp-validation-for="To" class="text-danger"></span>
+                <div>
+                    <label asp-for="BookingDate"></label>
+                    <input asp-for="BookingDate" class="form-control" />
+                    <span asp-validation-for="BookingDate" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="NumberOfPassengers"></label>
+                    <select asp-for="NumberOfPassengers" asp-items="@Html.GetEnumSelectList<NumberOfPassengers>()" class="form-control">
+                        NumberOfPassengers
+                        <option>--- Select  Number of Passengers ---</option>
+                    </select>
+                    <span asp-validation-for="NumberOfPassengers" class="text-danger"></span>
+                <div>
+                    <label asp-for="CarModel"></label>
+                    <select asp-for="CarModel" asp-items="@Html.GetEnumSelectList<CarModel>()" class="form-control">CarModel
+                        <option>--- Select a Car Model ---</option>
+                    </select>
+                    <span asp-validation-for="CarModel" class="text-danger"></span>
+                </div>
+               
+                <div class="d-grid mt-4">
+                    <button class="btn btn-primary">Book Now</button>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

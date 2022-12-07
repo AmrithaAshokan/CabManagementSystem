@@ -1,0 +1,453 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,700;1,700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0d0d0d;
+    overflow-x:hidden;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+    body header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 2em;
+        padding-right: 2em;
+        padding-top: 1em;
+    }
+
+        body header nav ul {
+            display: flex;
+            list-style-type: none;
+        }
+
+            body header nav ul li {
+                margin: 2em;
+                font-family: poppins;
+                font-weight: 300;
+            }
+
+                body header nav ul li a {
+                    text-decoration: none;
+                    color: white;
+                }
+
+                    body header nav ul li a:hover {
+                        color: yellow;
+                    }
+
+        body header h1 {
+            font-family: poppins;
+            color:white;
+        }
+
+            body header h1 a {
+                text-decoration: none;
+                font-style: italic;
+                display:flex;
+            }
+
+                body header h1 a img {
+                    margin-bottom: -15px;
+                    width: 50px;
+                    height: 50px;
+                }
+                body header h1 a i{
+                    color:white;
+                }
+
+                body header h1 a span {
+                    color: yellow;
+                    font-style: normal;
+                }
+
+        body header .login-form{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding-bottom:1em;
+        }
+
+        body header .login {
+            background-color: yellow;
+            color: black;
+            font-family: poppins;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 3px 15px;
+            border-radius: 3px;
+        }
+
+    body marquee {
+        font-size: 2rem;
+        width: 105vw;
+        transform: translate(-2em,-1em);
+    }
+
+    body .hero {
+        display: flex;
+        justify-content: space-evenly;
+        padding-top: 1.5em;
+        width:100vw;
+        transform: translate(-10em,-2em);
+    }
+
+        body .hero img {
+            width: auto;
+            height: 65vh;
+            border-radius: 10px;
+        }
+
+        body .hero div {
+            margin: 5em 10em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+            body .hero div h1 {
+                color: white;
+                font-family: poppins;
+                font-style: italic;
+                font-size: 2.7rem;
+            }
+
+            body .hero div p {
+                color: yellow;
+                font-family: poppins;
+                font-size: 1.5rem;
+                padding-bottom: 2em;
+            }
+
+            body .hero div a {
+                background-color: yellow;
+                color: rgb(0, 0, 0);
+                font-family: poppins;
+                font-weight: 700;
+                text-decoration: none;
+                padding: 5px 10px;
+                border-radius: 3px;
+                font-size: 1.2rem;
+            }
+
+    body .booking-sec {
+        transform: translateX(-7em);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        body .booking-sec form {
+            background-color: rgba(59, 58, 58, 0.258);
+            border-radius: 10px;
+            font-family: poppins;
+            width: 500px;
+            padding: 3em 4em;
+        }
+
+            body .booking-sec form button {
+                background-color: yellow;
+                padding: 7px 15px;
+                cursor: pointer;
+                color: black;
+                font-size: 1rem;
+                font-weight: 700;
+                border: none;
+                border-radius: 3px;
+            }
+
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+    .login-page .login-form {
+        background-color: rgba(59, 58, 58, 0.258);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 550px;
+        height: 450px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.331);
+    }
+
+        .login-page .login-form label {
+            color: rgba(255, 255, 255, 0.486);
+        }
+
+        .login-page .login-form img {
+            width: 110px;
+            height: auto;
+            padding-bottom: 1em;
+        }
+
+        .login-page .login-form .check-box a {
+            text-decoration: none;
+            color: yellow;
+            margin-left: 115px;
+            font-family: poppins;
+            font-weight: 300;
+        }
+
+            .login-page .login-form .check-box a:hover {
+                color: aqua;
+            }
+
+        .login-page .login-form input {
+            width: 400px;
+            height: 40px;
+            margin: 0.5em;
+            outline: none;
+            background-color: rgba(59, 58, 58, 0.258);
+            border: none;
+            padding-left: 1em;
+            font-size: 15px;
+            border-radius: 5px;
+            color: white;
+            font-family: poppins;
+        }
+
+            .login-page .login-form input:focus {
+                border-bottom: 1px solid yellow;
+            }
+
+        .login-page .login-form button {
+            background-color: yellow;
+            padding: 7px 16px;
+            align-self: flex-start;
+            cursor: pointer;
+            color: black;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 3px;
+        }
+
+    .login-page #checkbox {
+        width: 20px;
+        height: 20px;
+    }
+
+    .login-page .check-box {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 400px;
+        padding: 8px 0px;
+        font-family: poppins;
+        font-weight: 300;
+        margin-left: -20px;
+    }
+
+    .login-page .register {
+        color: rgba(255, 255, 255, 0.486);
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 400px;
+        font-family: poppins;
+        font-size: 14px;
+    }
+
+        .login-page .register a {
+            text-decoration: none;
+            color: rgba(255, 255, 0, 0.753);
+            font-family: poppins;
+            font-weight: 300;
+            padding-left: 5px;
+        }
+
+            .login-page .register a:hover {
+                color: aqua;
+            }
+
+    .login-page .container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding-top: 2em;
+        width: 400px;
+    }
+
+    .login-page .alert-danger {
+        color: red;
+    }
+
+@-webkit-keyframes cars {
+    0% {
+        background-image: url("https://imgd-ct.aeplcdn.com/664x415/n/cw/ec/49114/marazzo-exterior-left-front-three-quarter.jpeg?isig=0&q=75");
+    }
+
+    50% {
+        background-image: url("https://imgd.aeplcdn.com/664x374/n/9m6mjta_1496299.jpg?q=75");
+    }
+
+    100% {
+        background-image: url("https://cdni.autocarindia.com/Utils/ImageResizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Maruti-Suzuki-Swift-100320211204.jpg&w=730&h=484&q=75&c=1");
+    }
+}
+
+@keyframes cars {
+    0% {
+        background-image: url("https://imgd-ct.aeplcdn.com/664x415/n/cw/ec/49114/marazzo-exterior-left-front-three-quarter.jpeg?isig=0&q=75");
+    }
+
+    50% {
+        background-image: url("https://imgd.aeplcdn.com/664x374/n/9m6mjta_1496299.jpg?q=75");
+    }
+
+    100% {
+        background-image: url("https://cdni.autocarindia.com/Utils/ImageResizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Maruti-Suzuki-Swift-100320211204.jpg&w=730&h=484&q=75&c=1");
+    }
+}
+
+.signup {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    padding-left: 2em;
+}
+
+    .signup .taxi {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100vw;
+        height: 100vh;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+
+    .signup form {
+        background-color: rgba(255, 255, 255, 0);
+        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+        margin-top: 2em;
+        width: 400px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 3em 3em;
+        border-radius: 10px;
+    }
+
+        .signup form input {
+            width: 100%;
+            height: 28px;
+            margin-bottom: 1em;
+            outline: none;
+            border: none;
+            background-color: transparent;
+            border-bottom: 1px solid white;
+            color: aqua;
+            font-family: poppins;
+            font-size: 1rem;
+        }
+
+            .signup form input:focus {
+                border-color: aqua;
+                background-color: transparent;
+            }
+
+        .signup form .check-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+            .signup form .check-box #checkbox {
+                margin-top: 1em;
+                margin-left: 4em;
+                width: 20px;
+                height: 20px;
+            }
+
+        .signup form label {
+            margin-left: 1em;
+            width: 400px;
+            color: white;
+            font-size: 1rem;
+            font-family: poppins;
+        }
+
+            .signup form label a {
+                text-decoration: none;
+                color: aqua;
+            }
+
+                .signup form label a:hover {
+                    color: blue;
+                }
+
+        .signup form ::-moz-placeholder {
+            color: rgba(255, 255, 255, 0.647);
+            opacity: 1;
+        }
+
+        .signup form :-ms-input-placeholder {
+            color: rgba(255, 255, 255, 0.647);
+            opacity: 1;
+        }
+
+        .signup form ::placeholder {
+            color: rgba(255, 255, 255, 0.647);
+            opacity: 1;
+        }
+
+        .signup form button {
+            background-color: rgba(0, 255, 255, 0.11);
+            box-shadow: 2px 0px 15px 0px rgba(0, 0, 0, 0.75);
+            -webkit-box-shadow: 2px 0px 15px 0px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 2px 0px 15px 0px rgba(0, 0, 0, 0.75);
+            padding: 7px 16px;
+            align-self: flex-end;
+            cursor: pointer;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.305);
+            border-radius: 3px;
+        }
+
+        .signup form .alert-danger {
+            color: rgba(255, 0, 0, 0.861);
+            font-family: poppins;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .hovering{
+            color:yellow;
+        }
+        .hovering:hover{
+            color:aqua;
+        }
+        .bg-image{
+            z-index:-1;
+            width:100vw;
+            height:90vh;
+            transform:translateX(-5em);
+            filter:blur(5px);
+            position:fixed;
+        }
+
+
