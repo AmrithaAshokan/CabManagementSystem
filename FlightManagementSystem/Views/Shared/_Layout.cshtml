@@ -19,7 +19,7 @@
 <body>
     <header>
         <h1>
-            <a href="index.html">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
                 <img src="/Assets/logo.png">
                 <i>My</i><span>Taxi</span>
             </a>
@@ -29,7 +29,7 @@
                 <li><a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li></a>
                 <li> <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a></li></a>
                 <li> <a class="nav-link text-light" asp-area="Accounts" asp-controller="Home" asp-action="Booking">Book a Ride</a></li></a>
-                <li> <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">Rent a Car</a></li></a>
+                
             </ul>
         </nav>
         @if (User.Identity.IsAuthenticated)

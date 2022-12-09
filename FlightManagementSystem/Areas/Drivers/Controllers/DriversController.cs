@@ -7,24 +7,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CabManagementSystem.Data;
 using CabManagementSystem.Models;
+using CabManagementSystem.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CabManagementSystem.Areas.Drivers.Controllers
 {
     [Area("Drivers")]
+    //[Authorize(Roles = "Driver")]
     public class DriversController : Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public DriversController(ApplicationDbContext db)
+        public DriversController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
         // GET: Drivers/Drivers
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index()
         {
-            var applicationDbContext = db.Drivers.Include(d => d.CabDriver);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await db.BookARide.ToListAsync());
         }
 
         // GET: Drivers/Drivers/Details/5
@@ -58,7 +62,7 @@ namespace CabManagementSystem.Areas.Drivers.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DriverViewModel model,string id)
+        public async Task<IActionResult> Create(DriverViewModel model, string id)
         {
             if (!ModelState.IsValid)
             {
@@ -69,7 +73,7 @@ namespace CabManagementSystem.Areas.Drivers.Controllers
                 LicenseNumber = model.LicenseNumber,
                 CarName = model.CarName,
                 CarNumber = model.CarNumber,
-                CarModel= model.CarModel,
+                CarModel = model.CarModel,
                 DriverId = id
             };
             await db.AddAsync(user);
@@ -78,20 +82,14 @@ namespace CabManagementSystem.Areas.Drivers.Controllers
         }
 
         // GET: Drivers/Drivers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Accept(int id)
         {
-            if (id == null || db.Drivers == null)
-            {
-                return NotFound();
-            }
-
-            var driver = await db.Drivers.FindAsync(id);
-            if (driver == null)
-            {
-                return NotFound();
-            }
-            ViewData["DriverId"] = new SelectList(db.ApplicationUsers, "Id", "Id", driver.DriverId);
-            return View(driver);
+            var user = await userManager.GetUserAsync(User);
+            var booking = await db.BookARide.FindAsync(id);
+            var driver =  await db.Drivers.FirstOrDefaultAsync(x=> x.DriverId == user.Id);
+            booking.DriverId = driver.Id;
+            return View();
+            
         }
 
         // POST: Drivers/Drivers/Edit/5
@@ -99,34 +97,9 @@ namespace CabManagementSystem.Areas.Drivers.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CarName,CarNumber,CarModel,LicenseNumber,DriverId")] Driver driver)
+        public async Task<IActionResult> Accept(int id, [Bind("Id,CarName,CarNumber,CarModel,LicenseNumber,DriverId")] Driver driver)
         {
-            if (id != driver.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    db.Update(driver);
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DriverExists(driver.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["DriverId"] = new SelectList(db.ApplicationUsers, "Id", "Id", driver.DriverId);
+           
             return View(driver);
         }
 
@@ -163,14 +136,14 @@ namespace CabManagementSystem.Areas.Drivers.Controllers
             {
                 db.Drivers.Remove(driver);
             }
-            
+
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DriverExists(int id)
         {
-          return db.Drivers.Any(e => e.Id == id);
+            return db.Drivers.Any(e => e.Id == id);
         }
     }
 }

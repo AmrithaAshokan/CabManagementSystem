@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CabManagementSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatingTable : Migration
+    public partial class CreatenewBooknowTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,22 +51,6 @@ namespace CabManagementSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookARide",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    From = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    To = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CarModel = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookARide", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +159,58 @@ namespace CabManagementSystem.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Drivers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CarName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CarNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CarModel = table.Column<int>(type: "int", nullable: false),
+                    LicenseNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DriverId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Drivers_AspNetUsers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookARide",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    From = table.Column<int>(type: "int", nullable: false),
+                    To = table.Column<int>(type: "int", nullable: false),
+                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NumberOfPassengers = table.Column<int>(type: "int", nullable: false),
+                    CarModel = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DriverId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookARide", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookARide_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_BookARide_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -213,6 +249,33 @@ namespace CabManagementSystem.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookARide_DriverId",
+                table: "BookARide",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookARide_UserId",
+                table: "BookARide",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_CarNumber",
+                table: "Drivers",
+                column: "CarNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_DriverId",
+                table: "Drivers",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_LicenseNumber",
+                table: "Drivers",
+                column: "LicenseNumber",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -238,6 +301,9 @@ namespace CabManagementSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Drivers");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

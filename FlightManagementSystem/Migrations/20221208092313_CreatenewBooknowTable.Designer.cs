@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CabManagementSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221207041154_CreateDriverTable")]
-    partial class CreateDriverTable
+    [Migration("20221208092313_CreatenewBooknowTable")]
+    partial class CreatenewBooknowTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace CabManagementSystem.Migrations
                     b.Property<int>("CarModel")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DriverId")
+                        .HasColumnType("int");
+
                     b.Property<int>("From")
                         .HasColumnType("int");
 
@@ -48,7 +51,15 @@ namespace CabManagementSystem.Migrations
                     b.Property<int>("To")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("BookARide");
                 });
@@ -316,6 +327,23 @@ namespace CabManagementSystem.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("CabManagementSystem.Models.Bookings", b =>
+                {
+                    b.HasOne("CabManagementSystem.Models.Driver", "CabDriver")
+                        .WithMany()
+                        .HasForeignKey("DriverId");
+
+                    b.HasOne("CabManagementSystem.Models.ApplicationUser", "Users")
+                        .WithMany("BookingCabs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CabDriver");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("CabManagementSystem.Models.Driver", b =>
                 {
                     b.HasOne("CabManagementSystem.Models.ApplicationUser", "CabDriver")
@@ -376,6 +404,11 @@ namespace CabManagementSystem.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CabManagementSystem.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("BookingCabs");
                 });
 #pragma warning restore 612, 618
         }

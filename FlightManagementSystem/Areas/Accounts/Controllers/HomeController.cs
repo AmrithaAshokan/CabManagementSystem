@@ -1,8 +1,4 @@
-﻿
-using CabManagementSystem.Models;
-using Microsoft.AspNetCore.Identity;
-
-namespace CabManagementSystem.Areas.Accounts.Controllers
+﻿namespace CabManagementSystem.Areas.Accounts.Controllers
 {
 
 
@@ -42,8 +38,19 @@ namespace CabManagementSystem.Areas.Accounts.Controllers
             var res = await signInManager.PasswordSignInAsync(user, model.Password, true, true);
             if (res.Succeeded)
             {
+                if (await userManager.IsInRoleAsync(user, "Driver"))
+                {
+                    return RedirectToAction("Index", "Drivers", new { Area = "Drivers" });
+                }
+                else if (await userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    return RedirectToAction("Details", "Admin", new { Area = "Admin" });
+                }
+                else
+                {
+                    return Redirect(nameof(Booking));
+                }
 
-                return Redirect("/accounts/home/booking");
             }
             ModelState.AddModelError("", "Invalid Email or Password");
             return View(model);
@@ -76,23 +83,22 @@ namespace CabManagementSystem.Areas.Accounts.Controllers
 
                 if (await userManager.IsInRoleAsync(user, "Driver"))
                 {
-                    return RedirectToAction("Create", "Drivers", new { Area = "Drivers",id=user.Id });
+                    return RedirectToAction("Create", "Drivers", new { Area = "Drivers", id = user.Id });
                 }
-                else
-                {
-                    return RedirectToAction(nameof(Login));
-                }
+
+                return RedirectToAction(nameof(Login));
+
             }
-               
+
 
             foreach (var error in res.Errors)
             {
                 ModelState.AddModelError("", error.Description);
             }
             return View(model);
-           
 
-            
+
+
 
         }
         public async Task<IActionResult> Logout()
@@ -118,19 +124,38 @@ namespace CabManagementSystem.Areas.Accounts.Controllers
             {
                 return View(model);
             }
+            var user = await userManager.GetUserAsync(User);
             db.BookARide.Add(new Bookings()
             {
                 To = model.To,
                 From = model.From,
                 BookingDate = (DateTime)model.BookingDate,
                 NumberOfPassengers = model.NumberOfPassengers,
-                CarModel= model.CarModel
+                CarModel = model.CarModel,
+                UserId = await userManager.GetUserIdAsync(user)
             });
             await db.SaveChangesAsync();
-            return RedirectToAction("Index", "Home", new { Area = "" });
+            return RedirectToAction(nameof(Payment));
         }
 
-            public async Task<IActionResult> Index()
+        public IActionResult Payment()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PaymentSuccess()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> PaymentSuccess(int id)
+        {
+            return RedirectToAction(nameof(PaymentSuccess));
+        }
+
+
+        public async Task<IActionResult> Index()
         {
             return View();
         }
@@ -139,8 +164,7 @@ namespace CabManagementSystem.Areas.Accounts.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit()
         {
-            var signeduser = await userManager.GetUserAsync(User);
-            var user = await userManager.FindByEmailAsync(signeduser.Email);
+            var user = await userManager.GetUserAsync(User);
             return View(new EditViewModel()
             {
                 FirstName = user.FirstName,
@@ -158,8 +182,7 @@ namespace CabManagementSystem.Areas.Accounts.Controllers
 
             if (!ModelState.IsValid)
                 return View(model);
-            var signeduser = await userManager.GetUserAsync(User);
-            var user = await userManager.FindByEmailAsync(signeduser.Email);
+            var user = await userManager.GetUserAsync(User);
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;
@@ -172,8 +195,7 @@ namespace CabManagementSystem.Areas.Accounts.Controllers
         }
         public async Task<IActionResult> Delete()
         {
-            var signeduser = await userManager.GetUserAsync(User);
-            var user = await userManager.FindByEmailAsync(signeduser.Email);
+            var user = await userManager.GetUserAsync(User);
             await signInManager.SignOutAsync();
             await userManager.DeleteAsync(user);
             return Redirect("accounts/home/edit");
@@ -185,21 +207,22 @@ namespace CabManagementSystem.Areas.Accounts.Controllers
             await roleManager.CreateAsync(new IdentityRole() { Name = "User" });
             await roleManager.CreateAsync(new IdentityRole() { Name = "Driver" });
 
-                var appUser = new ApplicationUser()
-                {
-                    FirstName = "Admin",
-                    LastName = "Admin",
-                    Email = "admin@mail.com",
-                    UserName = "admin@777"
-                };
-                var res = await userManager.CreateAsync(appUser, "Pass@123");
-                await userManager.AddToRoleAsync(appUser, "Admin");
-            
+            var appUser = new ApplicationUser()
+            {
+                FirstName = "Admin",
+                LastName = "Admin",
+                Email = "admin@mail.com",
+                UserName = "admin@777"
+            };
+            var res = await userManager.CreateAsync(appUser, "Pass@123");
+            await userManager.AddToRoleAsync(appUser, "Admin");
+
             return Ok("Data generated");
         }
+
     }
-   }
-       
+}
+
 
 
 

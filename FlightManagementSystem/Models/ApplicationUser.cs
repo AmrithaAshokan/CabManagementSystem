@@ -7,5 +7,7 @@
 
         [StringLength(15)]
         public string LastName { get; set; }
+
+        public IEnumerable<Bookings> BookingCabs { get; set; }
     }
 }

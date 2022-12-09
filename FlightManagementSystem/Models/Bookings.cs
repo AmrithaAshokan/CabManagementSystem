@@ -1,4 +1,6 @@
-﻿namespace CabManagementSystem.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CabManagementSystem.Models
 {
     public enum Locations
     {
@@ -57,6 +59,13 @@
         public NumberOfPassengers NumberOfPassengers { get; set; }
 
         public CarModel CarModel { get; set; }
+        public ApplicationUser Users { get; set; }
+        [ForeignKey(nameof(Users))]
+        public string UserId { get; set; }
+
+        public Driver? CabDriver { get; set; }
+        [ForeignKey(nameof(CabDriver))]
+        public int? DriverId { get; set; }
 
     }
 }
